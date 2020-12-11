@@ -11,7 +11,7 @@ exports.index = function (req, res) {
             });
         res.json({
             status: "successs",
-            message: "Obter Bio com sucesso",
+            message: "Obter Bios com sucesso",
             data: bio       
         });
     });
