@@ -1,50 +1,48 @@
-
-
 let express = require('express')
+//import body parser
 let bodyParser = require('body-parser');
+//import mongoose
 let mongoose = require('mongoose');
-
-//Iniciar APP
 let app = express();
 
 //Import routes
 let apiRoutes = require("./bioRoutes")
-//usar a apiRoutes na API
-app.use('/api', apiRoutes)
 
-//configurar bodyparser para processar pedidos.
+//configure bodyparser to hande the post requests
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(bodyParser.json());
 
-//Ligação ao MoonGose
-const dbPath = 'mongodb://localhost/bioapp';
+//connect to mongoose
+const dbPath = 'mongodb://localhost/firstrest';
 const options = {useNewUrlParser: true, useUnifiedTopology: true}
 const mongo = mongoose.connect(dbPath, options);
 
 mongo.then(() => {
-    console.log('Ligado ao MongoDB');
+    console.log('connected');
 }, error => {
-    console.log(error, 'Erro de Ligação do MongoDB');
+    console.log(error, 'error');
 });
 var db=mongoose.connection;
 
-//Verificar ligação à Base de Dados
+//Check DB Connection
 if (!db)
-    console.log("Erro de Ligação à BD");
+    console.log("Error connecting db");
 else
-    console.log("Ligação à BD com sucesso");
+    console.log("DB Connected Successfully");
 
-// Porto do Servidor
-var port = process.env.PORT || 8080;
+// Server Port
+var port = process.env.PORT || 6666;
 
-// Mensagem de Boas-Vindas
-app.get('/', (req, res) => res.send('Bem-Vindo à API BIO'));
+// Welcome message
+app.get('/', (req, res) => res.send('Welcome to Express'));
 
+//Use API routes in the App
+app.use('/api', apiRoutes)
 
-// Iniciar servidor no porto definido
+// Launch app to the specified port
 app.listen(port, function() {
-    console.log("Running API BIO no porto: "+ port);
+    console.log("Running FirstRest on Port "+ port);
 });

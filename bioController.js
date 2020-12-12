@@ -1,7 +1,7 @@
 //Import Bio Model
 Bio = require('./bioModel');
 
-// index
+//For index
 exports.index = function (req, res) {
     Bio.get(function (err, bio) {
         if (err)
@@ -10,68 +10,68 @@ exports.index = function (req, res) {
                 message: err
             });
         res.json({
-            status: "successs",
-            message: "Obter Bios com sucesso",
+            status: "success",
+            message: "Got Bio Successfully!",
             data: bio       
         });
     });
 };
 
-//NOVA Bio
+//For creating new bio
 exports.add = function (req, res) {
     var bio = new Bio();
-    bio.nome = req.body.nome;
+    bio.nome = req.body.nome? req.body.nome: bio.nome;
     bio.email = req.body.email;
     bio.telef = req.body.telef;
     bio.morada = req.body.morada;
 
-    //Guardar e verificar erros
+    //Save and check error
     bio.save(function (err) {
         if (err)
             res.json(err);
 
         res.json({
-            message: "Nova Bio adicionada",
+            message: "New Bio Added!",
             data: bio
         });
     });
 };
 
-// Ver Bio
+// View Bio
 exports.view = function (req, res) {
     Bio.findById(req.params.bio_id, function (err, bio) {
         if (err)
             res.send(err);
         res.json({
-            message: 'Detalhes da Bio',
+            message: 'Bio Details',
             data: bio
         });
     });
 };
 
-// Atualizar Bio
+// Update Bio
 exports.update = function (req, res) {
     Bio.findById(req.params.bio_id, function (err, bio) {
         if (err)
             res.send(err);
-        bio.nome = req.body.nome;
+        bio.name = req.body.name ? req.body.name : bio.name;
         bio.email = req.body.email;
         bio.telef = req.body.telef;
         bio.morada = req.body.morada;
 
-        //Guardar e verificar erros
+        //save and check errors
         bio.save(function (err) {
             if (err)
                 res.json(err)
             res.json({
-                message: "Bio Atualizada com sucesso",
+                message: "Bio Updated Successfully",
                 data: bio
             });
         });
     });
 };
 
-// Apagar Bio
+// Delete Bio
 exports.delete = function (req, res) {
     Bio.deleteOne({
         _id: req.params.bio_id
@@ -79,8 +79,8 @@ exports.delete = function (req, res) {
         if (err)
             res.send(err)
         res.json({
-          //  status: "sucesso",
-            message: 'Bio Apagada com Sucesso.'
+            status: "success",
+            message: 'Bio Deleted'
         });
     });
 };

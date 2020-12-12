@@ -18,7 +18,7 @@ var bioSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    criado_em: {
+    created_at: {
         type: Date,
         default: Date.now
     }

@@ -1,15 +1,15 @@
 //initialize express router
 let router = require('express').Router();
 
-//Default API (Resposta)
+//set default API response
 router.get('/', function(req, res) {
     res.json({
-        status: 'API OK',
-        message: 'BioApp'
+        status: 'API Works',
+        message: 'Welcome to FirstRest API'
     });
 });
 
-//Importar Controlador
+//Import Bio Controller
 var bioController = require('./bioController');
 
 // Bio routes
