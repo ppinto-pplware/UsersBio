@@ -8,41 +8,39 @@ let app = express();
 //Import routes
 let apiRoutes = require("./bioRoutes")
 
-//configure bodyparser to hande the post requests
+//configurar bodyparser para processar pedidos
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(bodyParser.json());
 
-//connect to mongoose
-const dbPath = 'mongodb://localhost/firstrest';
+//Ligar à BD
+const dbPath = 'mongodb://localhost/bioApp';
 const options = {useNewUrlParser: true, useUnifiedTopology: true}
 const mongo = mongoose.connect(dbPath, options);
 
 mongo.then(() => {
-    console.log('connected');
+    console.log('Ligado à BD');
 }, error => {
     console.log(error, 'error');
 });
 var db=mongoose.connection;
 
-//Check DB Connection
+//Verificar Ligação
 if (!db)
     console.log("Error connecting db");
 else
     console.log("DB Connected Successfully");
 
-// Server Port
+// Porto Servidor
 var port = process.env.PORT || 6666;
 
-// Welcome message
-app.get('/', (req, res) => res.send('Welcome to Express'));
 
-//Use API routes in the App
+//Usar API routes na app
 app.use('/api', apiRoutes)
 
-// Launch app to the specified port
+// Iniciar Servidor
 app.listen(port, function() {
-    console.log("Running FirstRest on Port "+ port);
+    console.log("Servidor UP no porto: "+ port);
 });
